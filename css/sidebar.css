@@ -1,0 +1,30 @@
+ .sidebar {
+        background: linear-gradient(180deg, #1e3c72, #2a5298);
+        color: white;
+        min-height: 100vh;
+    }
+    .sidebar h6 {
+        color: #dbe7ff;
+        letter-spacing: 1px;
+        font-size: 12px;
+    }
+    .sidebar .nav-link {
+        color: #e0e6f1;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+        border-radius: 6px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .sidebar .nav-link:hover {
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+    }
+    .sidebar .nav-link.active {
+        background: rgba(255,255,255,0.25);
+        font-weight: bold;
+    }
+
+    
