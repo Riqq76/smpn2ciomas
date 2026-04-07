@@ -14,25 +14,7 @@ if (!$id || !is_numeric($id)) {
     exit;
 }
 
-/* ===== CEK SISWA ===== */
-$cekSiswa = mysqli_fetch_assoc(
-    mysqli_query(
-        $conn,
-        "SELECT COUNT(*) AS total FROM siswa WHERE kelas_id = $id"
-    )
-);
-
-if ($cekSiswa['total'] > 0) {
-    echo "
-    <script>
-        alert('❌ Kelas tidak bisa dihapus karena masih memiliki siswa');
-        window.location='index.php';
-    </script>
-    ";
-    exit;
-}
-
-/* ===== HAPUS KELAS ===== */
+/* ===== HAPUS KELAS (TANPA CEK SISWA) ===== */
 mysqli_query($conn, "DELETE FROM kelas WHERE id = $id");
 
 echo "

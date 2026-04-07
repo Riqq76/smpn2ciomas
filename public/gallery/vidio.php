@@ -1,27 +1,47 @@
-<?php
-include "../../config/database.php";
-$query = mysqli_query($conn, "SELECT * FROM kurikulum LIMIT 1");
-$data = mysqli_fetch_assoc($query);
+
+    <?php
+require_once __DIR__ . '/../../config/database.php'; // path fix sesuai struktur
+
+// Ambil data video saja
+$data = mysqli_query($conn, "SELECT * FROM gallery WHERE tipe='video' ORDER BY id DESC");
+
+// Fungsi untuk konversi link YouTube/Vimeo menjadi embed
+function video_embed($url) {
+    if (strpos($url, 'youtube.com/watch?v=') !== false) {
+        $video_id = explode('v=', $url)[1];
+        $video_id = explode('&', $video_id)[0];
+        return "https://www.youtube.com/embed/" . $video_id;
+    } elseif (strpos($url, 'youtu.be/') !== false) {
+        $video_id = explode('youtu.be/', $url)[1];
+        return "https://www.youtube.com/embed/" . $video_id;
+    } elseif (strpos($url, 'vimeo.com/') !== false) {
+        $video_id = explode('vimeo.com/', $url)[1];
+        return "https://player.vimeo.com/video/" . $video_id;
+    }
+    // selain YouTube/Vimeo tetap dikembalikan (misal MP4 lokal)
+    return $url;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <title>Kurikulum - SMPN 2 CIOMAS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery Foto - SMPN 2 Ciomas</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
+    <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
-    <link rel="stylesheet" href="../../css/akademik.css">
+    <link rel="stylesheet" href="../../css/gallery.css">
 </head>
 
 <body>
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
@@ -29,6 +49,7 @@ $data = mysqli_fetch_assoc($query);
                 <img src="../../asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
                 SMPN 2 CIOMAS
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,10 +78,10 @@ $data = mysqli_fetch_assoc($query);
                             Akademik
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="kurikulum.php">Kurikulum</a></li>
-                            <li><a class="dropdown-item" href="mapel.php">Mata Pelajaran</a></li>
-                            <li><a class="dropdown-item" href="penilaian.php">Penilaian</a></li>
-                            <li><a class="dropdown-item" href="buku.php">Link Buku</a></li>
+                            <li><a class="dropdown-item" href="../akademik/kurikulum.php">Kurikulum</a></li>
+                            <li><a class="dropdown-item" href="../akademik/mapel.php">Mata Pelajaran</a></li>
+                            <li><a class="dropdown-item" href="../akademik/penilaian.php">Penilaian</a></li>
+                            <li><a class="dropdown-item" href="../akademik/buku.php">Link Buku</a></li>
                         </ul>
                     </li>
 
@@ -97,42 +118,62 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </nav>
 
+
+
+
     <!-- CONTENT -->
-    <div class="container py-5" data-animate>
+    <section class="container py-5">
+        <div class="container" style="margin-top:100px;">
 
-        <h2 class="fw-bold mb-5 text-center" data-animate>
-            📚 Kurikulum Sekolah
-        </h2>
+            <h3 class="text-center fw-bold mb-5">🎬 Gallery Video</h3>
 
-        <div class="row justify-content-center" data-animate>
-            <div class="col-md-10">
-                <div class="card shadow-sm border-0" data-animate>
-                    <div class="card-body">
+            <div class="row g-4">
+                <?php if(mysqli_num_rows($data) > 0): ?>
+                <?php while($g = mysqli_fetch_assoc($data)): ?>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card shadow-sm h-100">
 
-                        <?php if($data): ?>
-                        <div style="line-height: 1.8;">
-                            <?= nl2br(htmlspecialchars($data['isi'])) ?>
-                        </div>
+                        <?php if(!empty($g['video_link'])): ?>
+                        <?php $embed_url = video_embed($g['video_link']); ?>
+                        <?php if(str_ends_with($embed_url, '.mp4')): ?>
+                        <!-- Video MP4 lokal -->
+                        <video class="w-100" controls>
+                            <source src="<?= htmlspecialchars($embed_url) ?>" type="video/mp4">
+                            Browser Anda tidak mendukung video.
+                        </video>
                         <?php else: ?>
-                        <p class="text-muted text-center">
-                            Belum ada data kurikulum.
-                        </p>
+                        <!-- YouTube / Vimeo Embed -->
+                        <div class="ratio ratio-16x9">
+                            <iframe src="<?= htmlspecialchars($embed_url) ?>"
+                                title="<?= htmlspecialchars($g['judul']) ?>" allowfullscreen frameborder="0"></iframe>
+                        </div>
                         <?php endif; ?>
+                        <?php else: ?>
+                        <!-- Placeholder jika link kosong -->
+                        <div
+                            class="ratio ratio-16x9 bg-secondary text-white d-flex align-items-center justify-content-center">
+                            <span>Video tidak tersedia</span>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- Judul -->
+                        <div class="card-body text-center p-2">
+                            <small class="fw-semibold"><?= htmlspecialchars($g['judul']) ?></small>
+                        </div>
 
                     </div>
                 </div>
+                <?php endwhile; ?>
+                <?php else: ?>
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Belum ada video
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
-
-        <div class="text-center mt-4" data-animate>
-            <a href="../../index.php" class="btn btn-outline-secondary">
-                ← Kembali ke Beranda
-            </a>
-        </div>
-
-    </div>
-
-    <!-- FOOTER -->
+    </section>
 
     <footer class="bg-dark text-light pt-5">
         <div class="container">
@@ -192,7 +233,7 @@ $data = mysqli_fetch_assoc($query);
                             <a href="../artikel.php" class="text-decoration-none text-light">Artikel</a>
                         </li>
                         <li class="mb-2">
-                            <a href="../gallery/foto.php" class="text-decoration-none text-light">Gallery</a>
+                            <a href="foto.php" class="text-decoration-none text-light">Gallery</a>
                         </li>
                         <li>
                             <a href="../kontak.php" class="text-decoration-none text-light">Kontak</a>
@@ -224,10 +265,8 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-     <script src="../../js/animasi.js"></script>
-
+</body>
 </body>
 
 </html>

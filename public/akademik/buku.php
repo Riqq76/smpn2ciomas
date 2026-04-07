@@ -28,143 +28,280 @@ if (isset($_GET['search'])) {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../../css/buku.css">
+    <link rel="stylesheet" href="../../css/akademik.css">
 </head>
 
 <body>
-   <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg fixed-top shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="../../index.php">SMPN 2 CIOMAS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="../../index.php">
+                <img src="../../asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
+                SMPN 2 CIOMAS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="../../index.php">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link" href="../tentang.php">Tentang</a></li>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">
-                        Akademik
-                    </a>
-                    <ul class="dropdown-menu shadow border-0">
-                        <li><a class="dropdown-item" href="kurikulum.php">Kurikulum</a></li>
-                        <li><a class="dropdown-item" href="mapel.php">Mata Pelajaran</a></li>
-                        <li><a class="dropdown-item" href="penilaian.php">Penilaian</a></li>
-                        <li><a class="dropdown-item" href="buku.php">Link Buku</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../../index.php">Beranda</a>
+                    </li>
 
-                <li class="nav-item"><a class="nav-link" href="../gallery.php">Gallery</a></li>
-                <li class="nav-item"><a class="nav-link" href="../kontak.php">Kontak</a></li>
+                    <!-- Tentang -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            Tentang kami
+                        </a>
+                        <ul class="dropdown-menu custom-dropdown">
+                            <li><a class="dropdown-item" href="../tentang/visi.php">Visi & Misi</a></li>
+                            <li><a class="dropdown-item" href="../tentang/profil.php">Profil</a></li>
+                        </ul>
+                    </li>
 
-                <li class="nav-item ms-lg-3">
-                    <a class="btn btn-warning btn-sm px-4" href="../../auth/login.php">Login</a>
-                </li>
-            </ul>
+                    <!-- Akademik -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            Akademik
+                        </a>
+                        <ul class="dropdown-menu custom-dropdown">
+                            <li><a class="dropdown-item" href="kurikulum.php">Kurikulum</a></li>
+                            <li><a class="dropdown-item" href="mapel.php">Mata Pelajaran</a></li>
+                            <li><a class="dropdown-item" href="penilaian.php">Penilaian</a></li>
+                            <li><a class="dropdown-item" href="buku.php">Link Buku</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Struktur -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            Struktur
+                        </a>
+                        <ul class="dropdown-menu custom-dropdown">
+                            <li><a class="dropdown-item" href="../struktur/osis.php">OSIS</a></li>
+                            <li><a class="dropdown-item" href="../struktur/kesiswaan.php">Kesiswaan</a></li>
+                            <li><a class="dropdown-item" href="../struktur/guru.php">Staff & Guru</a></li>
+                            <li><a class="dropdown-item" href="../struktur/kepsek_tu.php">Kepsek & TU</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Gallery -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            Gallery
+                        </a>
+                        <ul class="dropdown-menu custom-dropdown">
+                            <li><a class="dropdown-item" href="../gallery/foto.php">Foto</a></li>
+                            <li><a class="dropdown-item" href="../gallery/vidio.php">Video</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../kontak.php">Kontak</a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
     <!-- CONTENT -->
     <div class="container py-5">
 
-        <h2 class="fw-bold mb-5 text-center">📖 Buku & Referensi</h2>
-        <form method="GET" class="mb-5">
+        <!-- TITLE -->
+        <div class="text-center mb-5" data-animate>
+            <h2 class="fw-bold text-primary">
+                <i class="bi bi-book-half"></i> Buku & Referensi
+            </h2>
+            <p class="text-muted mb-2">
+                Sumber belajar untuk mendukung kegiatan akademik
+            </p>
+
+            <div class="d-flex justify-content-center">
+                <div class="border-bottom border-primary border-3 w-25"></div>
+            </div>
+        </div>
+
+        <!-- SEARCH -->
+        <form method="GET" class="mb-5" data-animate>
             <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="input-group shadow-sm">
-                        <input type="text" name="search" class="form-control" placeholder="Cari judul buku..."
-                            value="<?= htmlspecialchars($keyword) ?>">
-                        <button class="btn btn-primary">
-                            <i class="bi bi-search"></i> Cari
+                <div class="col-12 col-md-8 col-lg-6">
+
+                    <div class="input-group input-group-lg shadow-sm">
+                        <span class="input-group-text bg-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Cari judul buku atau referensi..." value="<?= htmlspecialchars($keyword) ?>">
+
+                        <button class="btn btn-primary px-4">
+                            Cari
                         </button>
                     </div>
+
                 </div>
             </div>
         </form>
 
-        <div class="row">
+        <!-- LIST BUKU -->
+        <div class="row g-4">
+
             <?php if(mysqli_num_rows($data) > 0): ?>
             <?php while($d = mysqli_fetch_assoc($data)): ?>
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm border-0 h-100 text-center">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">
+
+            <div class="col-12 col-sm-6 col-lg-4" data-animate>
+
+                <div class="card h-100 border-0 shadow-sm">
+
+                    <!-- BODY -->
+                    <div class="card-body d-flex flex-column text-center">
+
+                        <!-- ICON -->
+                        <div class="mb-3">
+                            <i class="bi bi-journal-bookmark-fill text-primary fs-1"></i>
+                        </div>
+
+                        <!-- JUDUL -->
+                        <h5 class="fw-bold mb-2">
                             <?= htmlspecialchars($d['judul']) ?>
                         </h5>
 
-                        <a href="<?= htmlspecialchars($d['url']) ?>" target="_blank" class="btn btn-primary btn-sm">
-                            🔗 Lihat Buku
-                        </a>
+                        <!-- DESKRIPSI -->
+                        <p class="text-muted small mb-4">
+                            Referensi pembelajaran untuk siswa & guru
+                        </p>
+
+                        <!-- BUTTON -->
+                        <div class="mt-auto">
+                            <a href="<?= htmlspecialchars($d['url']) ?>" target="_blank" class="btn btn-primary w-100">
+                                <i class="bi bi-box-arrow-up-right"></i> Buka Buku
+                            </a>
+                        </div>
+
                     </div>
+
+                    <!-- FOOTER -->
+                    <div class="card-footer bg-light text-center small text-muted">
+                        📚 Digital Learning Resource
+                    </div>
+
+                </div>
+
+            </div>
+
+            <?php endwhile; ?>
+
+            <?php else: ?>
+
+            <!-- EMPTY -->
+            <div class="col-12">
+                <div class="alert alert-info text-center shadow-sm" data-animate>
+                    <i class="bi bi-info-circle"></i> Belum ada buku tersedia
                 </div>
             </div>
-            <?php endwhile; ?>
-            <?php else: ?>
-            <div class="col-12 text-center">
-                <p class="text-muted">Belum ada buku tersedia.</p>
-            </div>
-            <?php endif; ?>
-        </div>
 
-        <div class="text-center mt-4">
-            <a href="../../index.php" class="btn btn-outline-secondary">
-                ← Kembali ke Beranda
-            </a>
+            <?php endif; ?>
+
         </div>
 
     </div>
 
-    <footer class="footer-section">
-        <div class="container py-5">
-            <div class="row gy-4">
 
-                <!-- MAP & NAMA SEKOLAH -->
-                <div class="col-lg-6">
-                    <h5 class="footer-title">SMP NEGERI 2 CIOMAS</h5>
+    <footer class="bg-dark text-light pt-5">
+        <div class="container">
 
-                    <div class="map-wrapper mt-3">
+            <div class="row gy-5">
+
+                <!-- BRAND & MAP -->
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3">SMP NEGERI 2 CIOMAS</h5>
+
+                    <p class="small text-secondary">
+                        Sekolah yang berkomitmen mencetak generasi berprestasi,
+                        berkarakter, dan berakhlak mulia melalui sistem Smart School.
+                    </p>
+
+                    <div class="ratio ratio-16x9 mt-3">
                         <iframe src="https://www.google.com/maps?q=SMP%20Negeri%202%20Ciomas&output=embed"
-                            allowfullscreen="" loading="lazy">
-                        </iframe>
-                    </div>
-
-                    <h6 class="mt-4 footer-subtitle">Follow Us</h6>
-                    <div class="footer-social">
-                        <a href="https://www.youtube.com/@smpn2ciomas"><i class="bi bi-youtube"></i></a>
-                        <a href="https://www.instagram.com/smpn2ciomasbgr/"><i class="bi bi-instagram"></i></a>
+                            loading="lazy" allowfullscreen></iframe>
                     </div>
                 </div>
 
-                <!-- KONTAK -->
-                <div class="col-lg-6">
-                    <h5 class="footer-title">Contact Us</h5>
+                <!-- CONTACT -->
+                <div class="col-lg-3">
+                    <h6 class="fw-bold mb-3">Kontak</h6>
 
-                    <ul class="footer-contact mt-3">
-                        <li><i class="bi bi-telephone"></i> 08xxxxxxxxxx</li>
-                        <li><i class="bi bi-envelope"></i> smpn2ciomas@gmail.com</li>
-                        <li><i class="bi bi-geo-alt"></i>
-                            Jl. Raya Ciomas, Kabupaten Bogor, Jawa Barat
+                    <ul class="list-unstyled small">
+                        <li class="mb-2">
+                            <i class="bi bi-telephone me-2"></i> 0251-7559394
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope me-2"></i> smpn2cms@ymail.com
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            Jl. Raya Ciomas, Kab. Bogor
                         </li>
                     </ul>
 
-                    <h6 class="footer-subtitle mt-4">Opening Hour</h6>
-                    <p>Senin – Jumat : 07.00 – 14.00</p>
+                    <h6 class="fw-bold mt-4">Jam Operasional</h6>
+                    <p class="small text-secondary mb-0">
+                        Senin – Jumat <br> 07.00 – 14.00
+                    </p>
+                </div>
+
+                <!-- MENU -->
+                <div class="col-lg-2">
+                    <h6 class="fw-bold mb-3">Menu</h6>
+
+                    <ul class="list-unstyled small">
+                        <li class="mb-2">
+                            <a href="../../index.php" class="text-decoration-none text-light">Beranda</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="../tentang/profil.php" class="text-decoration-none text-light">Profil</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="../artikel.php" class="text-decoration-none text-light">Artikel</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="../gallery/foto.php" class="text-decoration-none text-light">Gallery</a>
+                        </li>
+                        <li>
+                            <a href="../kontak.php" class="text-decoration-none text-light">Kontak</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- SOSIAL -->
+                <div class="col-lg-3">
+                    <h6 class="fw-bold mb-3">Ikuti Kami</h6>
+
+                    <div class="d-flex gap-3 mt-3 fs-5">
+                        <a href="https://www.youtube.com/@smpn2ciomas" class="text-light">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/smpn2ciomasbgr/" class="text-light">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
                 </div>
 
             </div>
-        </div>
 
-        <!-- COPYRIGHT -->
-        <div class="footer-bottom text-center py-3">
-            © <?= date('Y') ?> SMP Negeri 2 Ciomas | Smart School
+            <!-- FOOTER BOTTOM -->
+            <div class="border-top border-secondary mt-5 pt-4 pb-3 text-center small text-secondary">
+                © <?= date('Y') ?> SMP Negeri 2 Ciomas — Smart School
+            </div>
+
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/animasi.js"></script>
 
 </body>
 

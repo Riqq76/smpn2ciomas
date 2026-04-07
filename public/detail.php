@@ -1,21 +1,25 @@
-<?php
-require_once __DIR__ . "/config/database.php";
+<?php 
+require_once "../config/database.php"; 
 
-/* ===== ARTIKEL ===== */
-$artikel = mysqli_query($conn, "
-    SELECT judul, slug, gambar, isi
-    FROM artikel
-    WHERE status='publish'
-    ORDER BY id DESC
-    LIMIT 3
-");
+if(!isset($_GET['slug']) || $_GET['slug'] == '') { 
+    echo "Slug tidak ditemukan."; 
+    exit; 
+}
 
+$slug = mysqli_real_escape_string($conn, $_GET['slug']);
+$query = mysqli_query($conn, "SELECT * FROM artikel WHERE slug='$slug'");
 
+if(!$query){
+    die("Query error: " . mysqli_error($conn));
+}
 
+if(mysqli_num_rows($query) == 0) {
+    echo "Data tidak ditemukan.";
+    exit;
+}
 
+$data = mysqli_fetch_assoc($query);
 ?>
-<!DOCTYPE html>
-<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -23,26 +27,24 @@ $artikel = mysqli_query($conn, "
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Logo di Tab Browser -->
-    <link rel="icon" type="image/png" href="asset/logo.png">
+    <link rel="icon" type="image/png" href="../asset/logo.png">
 
-    <!-- BOOTSTRAP -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/kontak.css">
+
 </head>
 
-
 <body>
-
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="index.php">
-                <img src="asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
+            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="../index.php">
+                <img src="../asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
                 SMPN 2 CIOMAS
             </a>
 
@@ -54,7 +56,7 @@ $artikel = mysqli_query($conn, "
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="index.php">Beranda</a>
+                        <a class="nav-link text-white" href="../index.php">Beranda</a>
                     </li>
 
                     <!-- Tentang -->
@@ -63,8 +65,8 @@ $artikel = mysqli_query($conn, "
                             Tentang kami
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="public/tentang/visi.php">Visi & Misi</a></li>
-                            <li><a class="dropdown-item" href="public/tentang/profil.php">Profil</a></li>
+                            <li><a class="dropdown-item" href="tentang/visi.php">Visi & Misi</a></li>
+                            <li><a class="dropdown-item" href="tentang/profil.php">Profil</a></li>
                         </ul>
                     </li>
 
@@ -74,10 +76,10 @@ $artikel = mysqli_query($conn, "
                             Akademik
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="public/akademik/kurikulum.php">Kurikulum</a></li>
-                            <li><a class="dropdown-item" href="public/akademik/mapel.php">Mata Pelajaran</a></li>
-                            <li><a class="dropdown-item" href="public/akademik/penilaian.php">Penilaian</a></li>
-                            <li><a class="dropdown-item" href="public/akademik/buku.php">Link Buku</a></li>
+                            <li><a class="dropdown-item" href="akademik/kurikulum.php">Kurikulum</a></li>
+                            <li><a class="dropdown-item" href="akademik/mapel.php">Mata Pelajaran</a></li>
+                            <li><a class="dropdown-item" href="akademik/penilaian.php">Penilaian</a></li>
+                            <li><a class="dropdown-item" href="akademik/buku.php">Link Buku</a></li>
                         </ul>
                     </li>
 
@@ -87,10 +89,10 @@ $artikel = mysqli_query($conn, "
                             Struktur
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="public/struktur/osis.php">OSIS</a></li>
-                            <li><a class="dropdown-item" href="public/struktur/kesiswaan.php">Kesiswaan</a></li>
-                            <li><a class="dropdown-item" href="public/struktur/guru.php">Staff & Guru</a></li>
-                            <li><a class="dropdown-item" href="public/struktur/kepsek_tu.php">Kepsek & TU</a></li>
+                            <li><a class="dropdown-item" href="struktur/osis.php">OSIS</a></li>
+                            <li><a class="dropdown-item" href="struktur/kesiswaan.php">Kesiswaan</a></li>
+                            <li><a class="dropdown-item" href="struktur/guru.php">Staff & Guru</a></li>
+                            <li><a class="dropdown-item" href="struktur/kepsek_tu.php">Kepsek & TU</a></li>
                         </ul>
                     </li>
 
@@ -100,13 +102,13 @@ $artikel = mysqli_query($conn, "
                             Gallery
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="public/gallery/foto.php">Foto</a></li>
-                            <li><a class="dropdown-item" href="public/gallery/vidio.php">Video</a></li>
+                            <li><a class="dropdown-item" href="gallery/foto.php">Foto</a></li>
+                            <li><a class="dropdown-item" href="gallery/vidio.php">Video</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="public/kontak.php">Kontak</a>
+                        <a class="nav-link text-white" href="kontak.php">Kontak</a>
                     </li>
 
                 </ul>
@@ -114,105 +116,71 @@ $artikel = mysqli_query($conn, "
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="d-flex align-items-center text-white text-center "
-        style="min-height:60vh; background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url('asset/necid.jpg') center/cover no-repeat;">
-
-        <div class="container py-5">
-            <h1 class="fw-bold display-6 display-md-4 mb-3" data-animate>
-                SMP NEGERI 2 CIOMAS <br class="d-none d-md-block">
-                KABUPATEN BOGOR
-            </h1>
-
-            <p class="lead mb-4" data-animate>
-                Mewujudkan Generasi Berprestasi, Berkarakter, dan Berakhlak Mulia
-            </p>
-
-
+    <!-- HEADER -->
+    <div class="bg-primary text-white text-center py-5" data-animate>
+        <div class="container">
+            <h2 class="fw-bold mb-0">
+                <?= htmlspecialchars($data['judul']) ?>
+            </h2>
         </div>
-    </section>
-
-
-
-    <!-- sambutan kepala sekolah -->
-    <div data-animate="fade-up">
-        <section class="py-5 bg-light " data-animate=>
-            <div class="container">
-                <div class="row align-items-center g-4">
-
-                    <div class="col-lg-6 text-center">
-                        <img src="asset/kepala_sekolah.jpeg" class="img-fluid about-img">
-                    </div>
-
-                    <div class="col-lg-6" data-animate>
-                        <h3 class="section-title">Sambutan Kepala Sekolah</h3>
-                        <br>
-                        <h4>Raden Body Supriyana, S.Pd</h4>
-                        <p>SMP Negeri 2 Ciomas merupakan sekolah menengah pertama negeri yang berkomitmen
-                            menyelenggarakan
-                            pendidikan berkualitas dalam rangka mencetak peserta didik yang berprestasi, berkarakter,
-                            serta
-                            berakhlak mulia.
-
-                            Dalam pelaksanaan kegiatan pembelajaran, SMP Negeri 2 Ciomas menerapkan sistem Smart School
-                            yang
-                            modern dan transparan sebagai upaya meningkatkan efektivitas, efisiensi, serta keterbukaan
-                            dalam
-                            pengelolaan pendidikan.</p>
-                        <a href="public/tentang/profil.php" class="btn btn-primary mt-3">
-                            Selengkapnya →
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </section>
     </div>
 
+    <!-- CONTENT -->
+    <div class="container py-4 py-md-5">
+        <div class="row justify-content-center">
 
+            <div class="col-12 col-md-10 col-lg-8">
 
+                <div class="card shadow border-0" data-animate>
 
-    <!-- artikel -->
-    <section class="py-5" data-animate>
-        <div class="container">
+                    <!-- GAMBAR -->
+                    <?php 
+                $path = "../admin/uploads/artikel/" . $data['gambar'];
+                if(!empty($data['gambar']) && file_exists($path)): 
+                ?>
+                    <div class="ratio ratio-16x9">
+                        <img src="<?= $path ?>" class="card-img-top object-fit-cover">
+                    </div>
+                    <?php else: ?>
+                    <div class="ratio ratio-16x9">
+                        <img src="https://via.placeholder.com/800x400" class="card-img-top object-fit-cover">
+                    </div>
+                    <?php endif; ?>
 
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap" data-animate>
-                <h3 class="fw-bold">📰 Artikel Terbaru</h3>
-                <a href="public/artikel.php" class="btn btn-outline-primary btn-sm">
-                    Lihat Semua
-                </a>
-            </div>
+                    <!-- BODY -->
+                    <div class="card-body p-3 p-md-4">
 
-            <div class="row g-4">
-                <?php while ($a = mysqli_fetch_assoc($artikel)): ?>
-                <div class="col-md-6 col-lg-4" data-animate>
-                    <div class="card h-100">
-
-                        <?php if ($a['gambar']): ?>
-                        <img src="admin/uploads/artikel/<?= htmlspecialchars($a['gambar']) ?>" class="card-img-top">
+                        <!-- META -->
+                        <?php if(isset($data['tanggal'])): ?>
+                        <p class="text-muted small mb-3" data-animate>
+                            📅 <?= date('d M Y', strtotime($data['tanggal'])) ?>
+                        </p>
                         <?php endif; ?>
 
-                        <div class="card-body">
-                            <h5><?= htmlspecialchars($a['judul']) ?></h5>
-                            <p class="text-muted small"><?= substr(strip_tags($a['isi']),0,100) ?>...</p>
+                        <!-- ISI -->
+                        <div class="mb-4 text-justify" data-animate>
+                            <?= nl2br(htmlspecialchars($data['isi'])) ?>
                         </div>
 
-                        <div class="card-footer bg-white">
-                            <a href="public/detail.php?slug=<?= $a['slug'] ?>" class="btn btn-outline-primary btn-sm">
-                                Baca →
+                        <!-- BUTTON -->
+                        <div class="d-flex flex-column flex-sm-row gap-2 justify-content-between" data-animate>
+                            <a href="artikel.php" class="btn btn-outline-primary btn-sm">
+                                ← Artikel
+                            </a>
+
+                            <a href="../index.php" class="btn btn-primary btn-sm">
+                                🏠 Beranda
                             </a>
                         </div>
 
                     </div>
                 </div>
-                <?php endwhile; ?>
+
             </div>
 
         </div>
-    </section>
+    </div>
 
-
-    <!-- footer -->
     <footer class="bg-dark text-light pt-5">
         <div class="container">
 
@@ -262,19 +230,19 @@ $artikel = mysqli_query($conn, "
 
                     <ul class="list-unstyled small">
                         <li class="mb-2">
-                            <a href="index.php" class="text-decoration-none text-light">Beranda</a>
+                            <a href="../index.php" class="text-decoration-none text-light">Beranda</a>
                         </li>
                         <li class="mb-2">
-                            <a href="public/tentang/profil.php" class="text-decoration-none text-light">Profil</a>
+                            <a href="tentang/profil.php" class="text-decoration-none text-light">Profil</a>
                         </li>
                         <li class="mb-2">
-                            <a href="public/artikel.php" class="text-decoration-none text-light">Artikel</a>
+                            <a href="artikel.php" class="text-decoration-none text-light">Artikel</a>
                         </li>
                         <li class="mb-2">
-                            <a href="public/gallery/foto.php" class="text-decoration-none text-light">Gallery</a>
+                            <a href="gallery/foto.php" class="text-decoration-none text-light">Gallery</a>
                         </li>
                         <li>
-                            <a href="public/kontak.php" class="text-decoration-none text-light">Kontak</a>
+                            <a href="kontak.php" class="text-decoration-none text-light">Kontak</a>
                         </li>
                     </ul>
                 </div>
@@ -304,7 +272,8 @@ $artikel = mysqli_query($conn, "
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/home.js"></script>
+    <script src="../js/animasi.js"></script>
+
 </body>
 
 </html>

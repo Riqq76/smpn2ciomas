@@ -1,27 +1,29 @@
 <?php
-include "../../config/database.php";
-$query = mysqli_query($conn, "SELECT * FROM kurikulum LIMIT 1");
-$data = mysqli_fetch_assoc($query);
+require_once "../../config/database.php";
+
+// ambil hanya gambar
+$data = mysqli_query($conn, "SELECT * FROM gallery WHERE tipe='image' ORDER BY id DESC");
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <title>Kurikulum - SMPN 2 CIOMAS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery Foto - SMPN 2 Ciomas</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
+    <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
-    <link rel="stylesheet" href="../../css/akademik.css">
+    <link rel="stylesheet" href="../../css/gallery.css">
 </head>
 
 <body>
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
@@ -29,6 +31,7 @@ $data = mysqli_fetch_assoc($query);
                 <img src="../../asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
                 SMPN 2 CIOMAS
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,10 +60,10 @@ $data = mysqli_fetch_assoc($query);
                             Akademik
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="kurikulum.php">Kurikulum</a></li>
-                            <li><a class="dropdown-item" href="mapel.php">Mata Pelajaran</a></li>
-                            <li><a class="dropdown-item" href="penilaian.php">Penilaian</a></li>
-                            <li><a class="dropdown-item" href="buku.php">Link Buku</a></li>
+                            <li><a class="dropdown-item" href="../akademik/kurikulum.php">Kurikulum</a></li>
+                            <li><a class="dropdown-item" href="../akademik/mapel.php">Mata Pelajaran</a></li>
+                            <li><a class="dropdown-item" href="../akademik/penilaian.php">Penilaian</a></li>
+                            <li><a class="dropdown-item" href="../akademik/buku.php">Link Buku</a></li>
                         </ul>
                     </li>
 
@@ -97,42 +100,41 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </nav>
 
+
     <!-- CONTENT -->
-    <div class="container py-5" data-animate>
 
-        <h2 class="fw-bold mb-5 text-center" data-animate>
-            📚 Kurikulum Sekolah
-        </h2>
+    <section class="container py-5">
+        <div class="container" style="margin-top:100px;">
 
-        <div class="row justify-content-center" data-animate>
-            <div class="col-md-10">
-                <div class="card shadow-sm border-0" data-animate>
-                    <div class="card-body">
+            <h3 class="text-center fw-bold mb-4">📸 Gallery Foto</h3>
 
-                        <?php if($data): ?>
-                        <div style="line-height: 1.8;">
-                            <?= nl2br(htmlspecialchars($data['isi'])) ?>
+            <div class="row g-4">
+                <?php if(mysqli_num_rows($data) > 0): ?>
+                <?php while($g = mysqli_fetch_assoc($data)): ?>
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="card shadow-sm h-100">
+                        <img src="../uploads/<?= $g['file_name']; ?>" class="card-img-top"
+                            style="height:200px; object-fit:cover;">
+
+                        <div class="card-body text-center">
+                            <small><?= $g['judul']; ?></small>
                         </div>
-                        <?php else: ?>
-                        <p class="text-muted text-center">
-                            Belum ada data kurikulum.
-                        </p>
-                        <?php endif; ?>
+                    </div>
 
+                </div>
+                <?php endwhile; ?>
+                <?php else: ?>
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Belum ada foto
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
+    </section>
 
-        <div class="text-center mt-4" data-animate>
-            <a href="../../index.php" class="btn btn-outline-secondary">
-                ← Kembali ke Beranda
-            </a>
-        </div>
-
-    </div>
-
-    <!-- FOOTER -->
 
     <footer class="bg-dark text-light pt-5">
         <div class="container">
@@ -192,7 +194,7 @@ $data = mysqli_fetch_assoc($query);
                             <a href="../artikel.php" class="text-decoration-none text-light">Artikel</a>
                         </li>
                         <li class="mb-2">
-                            <a href="../gallery/foto.php" class="text-decoration-none text-light">Gallery</a>
+                            <a href="foto.php" class="text-decoration-none text-light">Gallery</a>
                         </li>
                         <li>
                             <a href="../kontak.php" class="text-decoration-none text-light">Kontak</a>
@@ -224,10 +226,8 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-     <script src="../../js/animasi.js"></script>
-
+</body>
 </body>
 
 </html>

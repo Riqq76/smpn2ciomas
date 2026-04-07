@@ -1,25 +1,36 @@
 <?php
 include "../../config/database.php";
-$query = mysqli_query($conn, "SELECT * FROM kurikulum LIMIT 1");
-$data = mysqli_fetch_assoc($query);
+
+// kategori langsung OSIS
+$kategori = 'osis';
+
+// query
+$stmt = $conn->prepare("SELECT * FROM struktur WHERE kategori=? ORDER BY id DESC");
+$stmt->bind_param("s", $kategori);
+$stmt->execute();
+$data = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
+
 <head>
     <meta charset="UTF-8">
-    <title>Kurikulum - SMPN 2 CIOMAS</title>
+    <title>Penilaian - SMPN 2 CIOMAS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="../../css/struktur.css">
 
-    <link rel="stylesheet" href="../../css/akademik.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
 </head>
+
 
 <body>
     <!-- NAVBAR -->
@@ -29,6 +40,7 @@ $data = mysqli_fetch_assoc($query);
                 <img src="../../asset/logo.png" alt="Logo" width="40" height="40" class="me-2">
                 SMPN 2 CIOMAS
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,10 +69,10 @@ $data = mysqli_fetch_assoc($query);
                             Akademik
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="kurikulum.php">Kurikulum</a></li>
-                            <li><a class="dropdown-item" href="mapel.php">Mata Pelajaran</a></li>
-                            <li><a class="dropdown-item" href="penilaian.php">Penilaian</a></li>
-                            <li><a class="dropdown-item" href="buku.php">Link Buku</a></li>
+                            <li><a class="dropdown-item" href="../akademik/kurikulum.php">Kurikulum</a></li>
+                            <li><a class="dropdown-item" href="../akademik/mapel.php">Mata Pelajaran</a></li>
+                            <li><a class="dropdown-item" href="../akademik/penilaian.php">Penilaian</a></li>
+                            <li><a class="dropdown-item" href="../akademik/buku.php">Link Buku</a></li>
                         </ul>
                     </li>
 
@@ -70,10 +82,10 @@ $data = mysqli_fetch_assoc($query);
                             Struktur
                         </a>
                         <ul class="dropdown-menu custom-dropdown">
-                            <li><a class="dropdown-item" href="../struktur/osis.php">OSIS</a></li>
-                            <li><a class="dropdown-item" href="../struktur/kesiswaan.php">Kesiswaan</a></li>
-                            <li><a class="dropdown-item" href="../struktur/guru.php">Staff & Guru</a></li>
-                            <li><a class="dropdown-item" href="../struktur/kepsek_tu.php">Kepsek & TU</a></li>
+                            <li><a class="dropdown-item" href="osis.php">OSIS</a></li>
+                            <li><a class="dropdown-item" href="kesiswaan.php">Kesiswaan</a></li>
+                            <li><a class="dropdown-item" href="guru.php">Staff & Guru</a></li>
+                            <li><a class="dropdown-item" href="kepsek_tu.php">Kepsek & TU</a></li>
                         </ul>
                     </li>
 
@@ -97,42 +109,45 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </nav>
 
+
     <!-- CONTENT -->
-    <div class="container py-5" data-animate>
+    <div class="container py-5" data-aos="fade-up">
 
-        <h2 class="fw-bold mb-5 text-center" data-animate>
-            📚 Kurikulum Sekolah
-        </h2>
+        <h3 class="fw-bold text-center mb-5 text-primary">
+            🏫 Struktur OSIS
+        </h3>
 
-        <div class="row justify-content-center" data-animate>
-            <div class="col-md-10">
-                <div class="card shadow-sm border-0" data-animate>
+        <div class="row g-4">
+            <?php if(mysqli_num_rows($data) > 0) { ?>
+            <?php while($d = mysqli_fetch_assoc($data)) { ?>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+
+                <div class="card shadow-lg h-100 text-center rounded-4 card-hover">
+                    <!-- FOTO OSIS -->
+                    <img src="<?= $d['foto'] ? '../../admin/uploads/' . $d['foto'] : 'https://via.placeholder.com/300x220?text=No+Image'; ?>"
+                        class="card-img-top rounded-top" style="height:220px; object-fit:cover;"
+                        alt="<?= $d['nama']; ?>">
+
                     <div class="card-body">
-
-                        <?php if($data): ?>
-                        <div style="line-height: 1.8;">
-                            <?= nl2br(htmlspecialchars($data['isi'])) ?>
-                        </div>
-                        <?php else: ?>
-                        <p class="text-muted text-center">
-                            Belum ada data kurikulum.
-                        </p>
-                        <?php endif; ?>
-
+                        <h6 class="fw-bold mb-1"><?= htmlspecialchars($d['nama']); ?></h6>
+                        <span class="badge bg-success"><?= htmlspecialchars($d['jabatan']); ?></span>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="text-center mt-4" data-animate>
-            <a href="../../index.php" class="btn btn-outline-secondary">
-                ← Kembali ke Beranda
-            </a>
+            </div>
+            <?php } ?>
+            <?php } else { ?>
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    Data OSIS belum tersedia
+                </div>
+            </div>
+            <?php } ?>
         </div>
 
     </div>
 
-    <!-- FOOTER -->
+
 
     <footer class="bg-dark text-light pt-5">
         <div class="container">
@@ -226,8 +241,17 @@ $data = mysqli_fetch_assoc($query);
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-     <script src="../../js/animasi.js"></script>
 
+
+    <!--  AOS ANIMATIONS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
 </body>
 
 </html>

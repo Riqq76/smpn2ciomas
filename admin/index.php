@@ -3,164 +3,148 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // 🔐 CEK LOGIN
-require_once __DIR__ . '/../config/auth_check.php';
+require_once __DIR__ . '/../config/auth_check.php'; 
 
-// DATABASE
-require_once __DIR__ . '/../config/database.php';
+// DATABASE 
+require_once __DIR__ . '/../config/database.php'; 
 
-// ==============================
-// FUNCTION HITUNG DATA
-// ==============================
+/* ======================
+   FUNCTION HITUNG DATA
+====================== */
 function hitung($conn, $tabel) {
     $cek = mysqli_query($conn, "SHOW TABLES LIKE '$tabel'");
     if (mysqli_num_rows($cek) == 0) {
         return 0;
     }
-
     $q = mysqli_query($conn, "SELECT id FROM $tabel");
     return $q ? mysqli_num_rows($q) : 0;
 }
 
-// HITUNG DATA
-$guru    = hitung($conn, 'guru');
-$kelas   = hitung($conn, 'kelas');
-$artikel = hitung($conn, 'artikel');
-$gallery = hitung($conn, 'gallery');
+/* ======================
+   AMBIL DATA
+====================== */
+$kurikulum_query = mysqli_query($conn, "SELECT isi FROM kurikulum LIMIT 1"); 
+$kurikulum = mysqli_fetch_assoc($kurikulum_query); 
 
-// ==============================
-// DATA GRAFIK 7 HARI TERAKHIR
-// ==============================
-$dataChart = [];
-$labelChart = [];
+/* ======================
+   HITUNG DATA
+====================== */
+$guru       = hitung($conn, 'guru');
+$kelas      = hitung($conn, 'kelas');
+$artikel    = hitung($conn, 'artikel');
+$gallery    = hitung($conn, 'gallery');
+$akademik   = hitung($conn, 'akademik');
+$kontak     = hitung($conn, 'pesan_kontak'); // ✅ FIX DISINI
 
-for ($i = 6; $i >= 0; $i--) {
-    $tanggal = date('Y-m-d', strtotime("-$i days"));
-
-    $stmt = $conn->prepare("SELECT COUNT(DISTINCT ip_address) as total FROM visitors WHERE visit_date=?");
-    $stmt->bind_param("s", $tanggal);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    $labelChart[] = date('d M', strtotime($tanggal));
-    $dataChart[] = $row['total'] ?? 0;
-}
+$total_mapel     = hitung($conn, 'mata_pelajaran');
+$total_penilaian = hitung($conn, 'penilaian');
+$total_link      = hitung($conn, 'link_buku');
 ?>
 
-<?php include __DIR__ . "/layout/header.php"; ?>
-<?php include __DIR__ . "/layout/sidebar.php"; ?>
+<?php include __DIR__ . "/layout/header.php"; ?> 
+<?php include __DIR__ . "/layout/sidebar.php"; ?>>
 
-<style>
-.dashboard-card {
-    border-radius: 15px;
-    transition: all 0.3s ease;
-}
-.dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-.dashboard-icon {
-    font-size: 35px;
-}
-</style>
+<div class="col-md-10 py-4">
+    <h3 class="fw-bold mb-4 text-center">📊 Dashboard Sekolah</h3>
 
-<div class="col-md-10 p-4">
-
-    <h3 class="fw-bold mb-4">Dashboard</h3>
-
-    <!-- CARD -->
     <div class="row g-4">
 
+        <!-- Guru -->
         <div class="col-6 col-md-4 col-lg-3">
-            <div class="card bg-success text-white dashboard-card">
-                <div class="card-body text-center">
-                    <div class="dashboard-icon mb-2">
-                        <i class="fa-solid fa-chalkboard-teacher"></i>
-                    </div>
-                    <h4><?= $guru ?></h4>
-                    <p>Guru</p>
+            <div class="card text-white bg-primary text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-chalkboard-teacher fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $guru ?></h4>
+                    <p class="mb-0">Guru</p>
                 </div>
             </div>
         </div>
 
+        <!-- Kelas -->
         <div class="col-6 col-md-4 col-lg-3">
-            <div class="card bg-warning text-white dashboard-card">
-                <div class="card-body text-center">
-                    <div class="dashboard-icon mb-2">
-                        <i class="fa-solid fa-school"></i>
-                    </div>
-                    <h4><?= $kelas ?></h4>
-                    <p>Kelas</p>
+            <div class="card text-white bg-info text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-school fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $kelas ?></h4>
+                    <p class="mb-0">Kelas</p>
                 </div>
             </div>
         </div>
 
+        <!-- Artikel -->
         <div class="col-6 col-md-4 col-lg-3">
-            <div class="card bg-info text-white dashboard-card">
-                <div class="card-body text-center">
-                    <div class="dashboard-icon mb-2">
-                        <i class="fa-solid fa-newspaper"></i>
-                    </div>
-                    <h4><?= $artikel ?></h4>
-                    <p>Artikel</p>
+            <div class="card text-white bg-success text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-newspaper fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $artikel ?></h4>
+                    <p class="mb-0">Artikel</p>
                 </div>
             </div>
         </div>
 
+        <!-- Gallery -->
         <div class="col-6 col-md-4 col-lg-3">
-            <div class="card bg-danger text-white dashboard-card">
-                <div class="card-body text-center">
-                    <div class="dashboard-icon mb-2">
-                        <i class="fa-solid fa-image"></i>
-                    </div>
-                    <h4><?= $gallery ?></h4>
-                    <p>Gallery</p>
+            <div class="card text-white bg-warning text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-image fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $gallery ?></h4>
+                    <p class="mb-0">Gallery</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Mata Pelajaran -->
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card text-white bg-danger text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-graduation-cap fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $total_mapel ?></h4>
+                    <p class="mb-0">Mata Pelajaran</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Penilaian -->
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card text-white bg-secondary text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-file-pen fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $total_penilaian ?></h4>
+                    <p class="mb-0">Penilaian</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Link Buku -->
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card text-white bg-dark text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-book fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $total_link ?></h4>
+                    <p class="mb-0">Link Buku</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- kontak_pesan -->
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card text-white bg-info text-center shadow-sm h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
+                    <i class="fa-solid fa-envelope fa-2x mb-2"></i>
+                    <h4 class="fw-bold mb-1"><?= $kontak ?></h4>
+                    <p class="mb-0">Pesan Kontak</p>
                 </div>
             </div>
         </div>
 
     </div>
-
-    <!-- GRAFIK -->
-    <div class="card shadow mt-5">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">
-                <i class="fa-solid fa-chart-line text-primary"></i>
-                Statistik Pengunjung 7 Hari Terakhir
-            </h5>
-            <canvas id="visitorChart" height="100"></canvas>
-        </div>
-    </div>
-
 </div>
 
-<!-- CHART JS -->
+<!-- CHART JS (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-const ctx = document.getElementById('visitorChart');
-
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <?= json_encode($labelChart); ?>,
-        datasets: [{
-            label: 'Jumlah Pengunjung',
-            data: <?= json_encode($dataChart); ?>,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-</script>
 
 <?php include __DIR__ . "/layout/footer.php"; ?>

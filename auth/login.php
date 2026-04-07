@@ -16,7 +16,7 @@ if (!isset($_SESSION['token'])) {
    🚫 CEK SUDAH LOGIN
 ============================== */
 if (isset($_SESSION['login'])) {
-    header("Location: " . BASE_URL . "index.php");
+    header("Location: " . BASE_URL . "admin/index.php");
     exit;
 }
 
@@ -41,60 +41,61 @@ if (isset($_SESSION['login_attempt']) && $_SESSION['login_attempt'] >= $max_atte
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - Smart School</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart School</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-<style>
-body {
-    background: linear-gradient(135deg, #0d6efd, #0a58ca);
-}
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        }
 
-.login-card {
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-}
+        .login-card {
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
 
-.secure-badge {
-    font-size: 13px;
-    background: #e9f5ff;
-    color: #0d6efd;
-    padding: 6px 12px;
-    border-radius: 20px;
-}
-</style>
+        .secure-badge {
+            font-size: 13px;
+            background: #e9f5ff;
+            color: #0d6efd;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+    </style>
 </head>
 
 <body class="d-flex align-items-center justify-content-center vh-100">
 
-<div class="card shadow-lg p-4 login-card bg-white" style="max-width:400px; width:100%;">
+    <div class="card shadow-lg p-4 login-card bg-white" style="max-width:400px; width:100%;">
 
-    <div class="text-center mb-3">
-        <h4>🔐 Login Admin</h4>
-        <div class="secure-badge mt-2">
-            <i class="fa-solid fa-shield-halved"></i> Secure Double Protection Active
+        <div class="text-center mb-3">
+            <h4>🔐 Login Admin</h4>
+            <div class="secure-badge mt-2">
+                <i class="fa-solid fa-shield-halved"></i> Secure Double Protection Active
+            </div>
         </div>
-    </div>
 
-    <?php if ($is_locked): ?>
+        <?php if ($is_locked): ?>
         <div class="alert alert-danger text-center">
             <i class="fa-solid fa-lock"></i><br>
             Terlalu banyak percobaan login.<br>
             Coba lagi dalam <strong><?= $remaining_time ?> detik</strong>
         </div>
 
-    <?php else: ?>
+        <?php else: ?>
 
         <?php if (isset($_GET['error'])): ?>
-            <div class="alert alert-danger text-center py-2">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                Username atau password salah <br>
-                <small>Sisa percobaan: <?= $remaining_attempt ?></small>
-            </div>
+        <div class="alert alert-danger text-center py-2">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            Username atau password salah <br>
+            <small>Sisa percobaan: <?= $remaining_attempt ?></small>
+        </div>
         <?php endif; ?>
 
         <form action="login_proses.php" method="POST" autocomplete="off">
@@ -132,29 +133,30 @@ body {
             </button>
         </form>
 
-    <?php endif; ?>
+        <?php endif; ?>
 
-    <div class="text-center mt-3">
-        <small class="text-muted">
-            Smart School System © <?= date('Y') ?>
-        </small>
+        <div class="text-center mt-3">
+            <small class="text-muted">
+                Smart School System © <?= date('Y') ?>
+            </small>
+        </div>
     </div>
-</div>
 
-<script>
-function togglePassword() {
-    const password = document.getElementById("password");
-    const icon = document.getElementById("eyeIcon");
+    <script>
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const icon = document.getElementById("eyeIcon");
 
-    if (password.type === "password") {
-        password.type = "text";
-        icon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        password.type = "password";
-        icon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
-</script>
+            if (password.type === "password") {
+                password.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                password.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
 
 </body>
+
 </html>
