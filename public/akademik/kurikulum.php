@@ -1,5 +1,5 @@
 <?php
-include "../../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
 $query = mysqli_query($conn, "SELECT * FROM kurikulum LIMIT 1");
 $data = mysqli_fetch_assoc($query);
 ?>

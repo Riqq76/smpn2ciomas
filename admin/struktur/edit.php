@@ -1,5 +1,6 @@
 <?php
-require_once "../../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
+
 
 $id = $_GET['id'];
 $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM struktur WHERE id=$id"));

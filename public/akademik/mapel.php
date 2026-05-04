@@ -1,5 +1,5 @@
 <?php
-include "../../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
 $data = mysqli_query($conn, "SELECT * FROM mata_pelajaran ORDER BY id DESC");
 ?>
 <!DOCTYPE html>

@@ -1,6 +1,17 @@
 <?php 
-include "../../config/database.php"; 
+require_once __DIR__ . "/../../config/database.php";
+
+// pastikan koneksi ada
+if (!isset($conn)) {
+    die("Koneksi database tidak ditemukan");
+}
+
 $data = mysqli_query($conn, "SELECT * FROM penilaian ORDER BY id DESC");
+
+// cek error query
+if (!$data) {
+    die("Query error: " . mysqli_error($conn));
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

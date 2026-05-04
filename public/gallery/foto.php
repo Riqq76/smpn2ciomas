@@ -1,8 +1,19 @@
 <?php
-require_once "../../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
 
-// ambil hanya gambar
-$data = mysqli_query($conn, "SELECT * FROM gallery WHERE tipe='image' ORDER BY id DESC");
+// pastikan koneksi ada
+if (!isset($conn)) {
+    die("Koneksi database tidak ditemukan");
+}
+
+// query data
+$query = "SELECT * FROM gallery WHERE tipe='image' ORDER BY id DESC";
+$data = mysqli_query($conn, $query);
+
+// cek jika query error
+if (!$data) {
+    die("Query error: " . mysqli_error($conn));
+}
 ?>
 
 <!DOCTYPE html>
