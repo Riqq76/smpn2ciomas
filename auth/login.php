@@ -38,7 +38,18 @@ if (isset($_SESSION['login_attempt']) && $_SESSION['login_attempt'] >= $max_atte
         $_SESSION['lock_time'] = 0;
     }
 }
+
+$remaining_time = 0;
+
+if ($is_locked) {
+    $remaining_time = $lock_time - time();
+
+    if ($remaining_time < 0) {
+        $remaining_time = 0;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
