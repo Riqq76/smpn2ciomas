@@ -114,21 +114,52 @@ if(isset($_POST['kirim'])){
             </div>
         </div>
     </nav>
-    <!-- HERO HEADER -->
-    <section class="d-flex align-items-center text-white text-center"
-        style="min-height:50vh; background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url('../asset/necid.jpg') center/cover no-repeat;">
 
-        <div class="container py-5">
-            <h1 class="fw-bold display-6 display-md-4 mb-3"data-animate>
-                Untuk Informasi Lebih Lanjut <br class="d-none d-md-block">
-                HUBUNGI SMP Negeri 2 Ciomas
-            </h1>
 
-            <p class="lead mb-0 "data-animate>
-                 SMP Negeri 2 Ciomas Kabupaten Bogor siap memberikan informasi dan bantuan yang Anda butuhkan. Jangan ragu untuk menghubungi kami melalui berbagai saluran komunikasi yang tersedia. Kami siap membantu Anda dengan pertanyaan, saran, atau kebutuhan informasi terkait sekolah kami.
-            </p>
+<section class="hero-section">
+
+    <!-- CAROUSEL -->
+    <div id="heroCarousel"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="1500">
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img src="../asset/necid.jpg" class="hero-img" alt="">
+            </div>
+
+            <div class="carousel-item">
+                <img src="../asset/luar sekolah.png" class="hero-img" alt="">
+            </div>
+
+            <div class="carousel-item">
+                <img src="../asset/sekolah.png" class="hero-img" alt="">
+            </div>
+
         </div>
-    </section>
+    </div>
+
+
+    <!-- overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- content -->
+    <div class="hero-content">
+        <h1>
+            SMP NEGERI 2 CIOMAS <br>
+            KABUPATEN BOGOR
+        </h1>
+
+        <p>
+            Mewujudkan Generasi Berprestasi,
+            Berkarakter, dan Berakhlak Mulia
+        </p>
+    </div>
+
+</section>
+   
 
 
     <!-- INFO + MAP -->

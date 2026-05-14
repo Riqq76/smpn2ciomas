@@ -114,62 +114,93 @@ $artikel = mysqli_query($conn, "
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="d-flex align-items-center text-white text-center "
-        style="min-height:60vh; background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url('asset/necid.jpg') center/cover no-repeat;">
+    <!-- HERO SECTION -->
+    <section class="hero-section">
 
-        <div class="container py-5">
-            <h1 class="fw-bold display-6 display-md-4 mb-3" data-animate>
-                SMP NEGERI 2 CIOMAS <br class="d-none d-md-block">
+        <!-- CAROUSEL -->
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2500">
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <img src="asset/necid.jpg" class="hero-img" alt="">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="asset/luar sekolah.png" class="hero-img" alt="">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="asset/sekolah.png" class="hero-img" alt="">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- OVERLAY -->
+        <div class="hero-overlay"></div>
+
+        <!-- TEXT -->
+        <div class="hero-content">
+            <h1>
+                SMP NEGERI 2 CIOMAS <br>
                 KABUPATEN BOGOR
             </h1>
 
-            <p class="lead mb-4" data-animate>
-                Mewujudkan Generasi Berprestasi, Berkarakter, dan Berakhlak Mulia
+            <p>
+                Mewujudkan Generasi Berprestasi,
+                Berkarakter, dan Berakhlak Mulia
             </p>
-
-
         </div>
+
     </section>
 
 
 
-    <!-- sambutan kepala sekolah -->
-    <div data-animate="fade-up">
-        <section class="py-5 bg-light " data-animate=>
-            <div class="container">
-                <div class="row align-items-center g-4">
+    <!-- SAMBUTAN KEPALA SEKOLAH -->
+    <section class="kepsek-section py-5 bg-light">
+        <div class="container">
 
-                    <div class="col-lg-6 text-center">
-                        <img src="asset/kepala_sekolah.jpeg" class="img-fluid about-img">
-                    </div>
+            <div class="row align-items-center justify-content-center g-5">
 
-                    <div class="col-lg-6" data-animate>
-                        <h3 class="section-title">Sambutan Kepala Sekolah</h3>
-                        <br>
-                        <h4>Raden Body Supriyana, S.Pd</h4>
-                        <p>SMP Negeri 2 Ciomas merupakan sekolah menengah pertama negeri yang berkomitmen
-                            menyelenggarakan
-                            pendidikan berkualitas dalam rangka mencetak peserta didik yang berprestasi, berkarakter,
-                            serta
-                            berakhlak mulia.
-
-                            Dalam pelaksanaan kegiatan pembelajaran, SMP Negeri 2 Ciomas menerapkan sistem Smart School
-                            yang
-                            modern dan transparan sebagai upaya meningkatkan efektivitas, efisiensi, serta keterbukaan
-                            dalam
-                            pengelolaan pendidikan.</p>
-                        <a href="public/tentang/profil.php" class="btn btn-primary mt-3">
-                            Selengkapnya →
-                        </a>
-                    </div>
-
+                <!-- FOTO -->
+                <div class="col-lg-5 col-md-6 text-center">
+                    <img src="asset/kepala_sekolah.jpeg" class="img-fluid kepsek-img" alt="Kepala Sekolah">
                 </div>
+
+                <!-- TEXT -->
+                <div class="col-lg-6 col-md-12">
+                    <h2 class="section-title mb-4">
+                        Sambutan Kepala Sekolah
+                    </h2>
+
+                    <h4 class="kepsek-nama mb-3">
+                        Raden Body Supriyana, S.Pd
+                    </h4>
+
+                    <p class="kepsek-text">
+                        SMP Negeri 2 Ciomas merupakan sekolah menengah pertama negeri
+                        yang berkomitmen menyelenggarakan pendidikan berkualitas
+                        dalam rangka mencetak peserta didik yang berprestasi,
+                        berkarakter, serta berakhlak mulia.
+                    </p>
+
+                    <p class="kepsek-text">
+                        Dalam pelaksanaan kegiatan pembelajaran, SMP Negeri 2 Ciomas
+                        menerapkan sistem Smart School yang modern dan transparan
+                        sebagai upaya meningkatkan efektivitas, efisiensi,
+                        serta keterbukaan dalam pengelolaan pendidikan.
+                    </p>
+
+                    <a href="public/tentang/profil.php" class="btn btn-primary px-4 py-2 mt-3">
+                        Selengkapnya →
+                    </a>
+                </div>
+
             </div>
-        </section>
-    </div>
 
-
+        </div>
+    </section>
 
 
     <!-- artikel -->

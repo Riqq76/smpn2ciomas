@@ -112,15 +112,22 @@ include "../../config/database.php";
                         <p class="mb-3 text-dark fw-semibold">
                             Terwujudnya peserta didik <strong>SMP Negeri 2 Ciomas</strong>
                             yang <strong>beriman dan bertakwa</strong>, berakhlak mulia,
-                            berprestasi, berwawasan lingkungan, serta mampu bersaing
-                            di era global dan digital.
+                            berprestasi, berwawasan lingkungan, disiplin, kreatif,
+                            mandiri, serta mampu bersaing di era global dan digital
+                            melalui penguasaan ilmu pengetahuan, teknologi, dan karakter
+                            yang kuat dalam kehidupan sehari-hari.
                         </p>
 
                         <p class="text-dark mb-0">
                             Visi ini menjadi landasan utama dalam setiap kegiatan
-                            pembelajaran dan pengelolaan sekolah.
+                            pembelajaran dan pengelolaan sekolah. Dengan semangat
+                            kebersamaan, SMP Negeri 2 Ciomas terus berupaya menciptakan
+                            lingkungan pendidikan yang nyaman, inovatif, dan inspiratif
+                            guna mendukung perkembangan potensi peserta didik baik dalam
+                            bidang akademik maupun non-akademik agar mampu menjadi
+                            generasi yang unggul, bertanggung jawab, serta bermanfaat
+                            bagi masyarakat, bangsa, dan negara.
                         </p>
-
                     </div>
                 </div>
             </div>

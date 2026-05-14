@@ -2,26 +2,6 @@
    ROOT & GLOBAL
 ========================================================= */
 :root {
-    --primary: #1909a9;        /* biru utama */
-    --secondary: #2563eb;      /* biru sekunder */
-    --accent: #fbc02d;         /* kuning */
-    --dark: #111827;
-    --text-main: #1f2933;
-    --bg-main: #f8fafc;
-}
-
-body {
-    padding-top: 70px;
-    background: var(--bg-main);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    color: var(--text-main);
-    line-height: 1.6;
-}
-
-/* =========================================================
-   ROOT & GLOBAL
-========================================================= */
-:root {
     --primary: #1909a9;
     --secondary: #2563eb;
     --accent: #fbc02d;
@@ -45,13 +25,13 @@ body {
 .navbar {
     background: linear-gradient(135deg, var(--primary), #312e81);
     box-shadow: 0 4px 15px rgba(0,0,0,.15);
-    padding: 12px 0;
+    padding: 17px 0;
 }
 
 /* Brand */
 .navbar-brand {
     color: #fff !important;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .5px;
 }
 
@@ -72,7 +52,7 @@ body {
 /* Active link */
 .navbar .nav-link.active {
     color: #ffc107 !important;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 
@@ -101,7 +81,7 @@ body {
 }
 
 .navbar .dropdown-item {
-    font-weight: 500;
+    font-weight: 600;
     padding: 10px 18px;
     transition: all .2s ease;
 }
@@ -113,7 +93,7 @@ body {
 }
 
 /* Hover dropdown otomatis desktop */
-@media (min-width: 992px) {
+@media (min-width: 1000px) {
     .navbar .dropdown:hover .dropdown-menu {
         display: block;
         margin-top: 0;
@@ -152,31 +132,94 @@ body {
     }
 }
 
+/* ========================================================= 
+     HERO SECTION 
+========================================================= */
 /* =========================================================
-   HERO
+   HERO SECTION
 ========================================================= */
 
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background:
-        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-        url("../img/sekolah.jpg") center / cover no-repeat;
-    color: #fff;
+.hero-section{
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    overflow: hidden;
 }
 
-.hero h1 {
+/* CAROUSEL */
+#heroCarousel{
+    width: 100%;
+    height: 100%;
+}
+
+#heroCarousel .carousel-inner,
+#heroCarousel .carousel-item{
+    width: 100%;
+    height: 100%;
+}
+
+/* IMAGE */
+.hero-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* OVERLAY */
+.hero-overlay{
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+}
+
+/* CONTENT */
+.hero-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    width: 90%;
+
+    text-align: center;
+    color: white;
+}
+
+/* TITLE */
+.hero-content h1{
+    font-size: 4rem;
     font-weight: 700;
     line-height: 1.2;
+    margin-bottom: 15px;
+
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
-.hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1.1rem;
+/* SUBTITLE */
+.hero-content p{
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .hero-section{
+        height: 55vh;
+    }
+
+    .hero-content h1{
+        font-size: 2rem;
+    }
+
+    .hero-content p{
+        font-size: 1rem;
+    }
+}
 /* =========================================================
    BUTTON
 ========================================================= */
@@ -244,142 +287,6 @@ footer a:hover {
 @media (max-width: 768px) {
     body {
         padding-top: 70px;
-    }
-
-    .hero {
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 1.9rem;
-    }
-}
-
-
-/* =========================================================
-   PROFIL & VISI IMAGE ALIGN
-========================================================= */
-.profile-img,
-.visi-img {
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-    max-height: 360px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-/* Supaya kolom gambar & teks sejajar */
-.card .row {
-    align-items: stretch;
-}
-
-/* Mobile biar tetap enak dilihat */
-@media (max-width: 768px) {
-    .profile-img,
-    .visi-img {
-        min-height: 220px;
-        max-height: 260px;
-    }
-}
-.profile-img,
-.visi-img {
-    transition: transform .4s ease, box-shadow .4s ease;
-}
-
-.profile-img:hover,
-.visi-img:hover {
-    transform: scale(1.03);
-    box-shadow: 0 15px 35px rgba(0,0,0,.2);
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background:
-        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-        url("../img/sekolah.jpg") center / cover no-repeat;
-}
-
-.hero h1 {
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-}
-
-/* =========================================================
-   BUTTON
-========================================================= */
-.btn {
-    padding: 12px 28px;
-    border-radius: 50px;
-    transition: all .3s ease;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, var(--secondary), #1d4ed8);
-    border: none;
-}
-
-.btn-primary:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(37,99,235,.4);
-}
-
-.btn-warning {
-    background: linear-gradient(135deg, var(--accent), #f59e0b);
-    border: none;
-    color: #000;
-    font-weight: 600;
-}
-
-.btn-warning:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(251,192,45,.45);
-}
-
-/* =========================================================
-   SECTION TITLE
-========================================================= */
-.section-title,
-h3 {
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 12px;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-footer {
-    background: var(--dark);
-    color: #9ca3af;
-}
-
-footer a {
-    color: #9ca3af;
-}
-
-footer a:hover {
-    color: #fff;
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media (max-width: 768px) {
-    body {
-        padding-top: 60px;
     }
 
     .hero {
